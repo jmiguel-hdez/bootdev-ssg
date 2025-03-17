@@ -6,8 +6,6 @@ class TestHTMLNode(unittest.TestCase):
     def test_repr(self):
         node = HTMLNode("p", "a paragraph text")
         representation = str(node)
-        print(node)
-        print(representation)
         self.assertTrue(representation.find("HTMLNode(") != -1)
 
     def test_props(self):
