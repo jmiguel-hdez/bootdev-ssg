@@ -1,12 +1,12 @@
 from enum import Enum
 
 class TextType(Enum):
-    NORMAL = "NORMAL"
-    BOLD = "BOLD"
-    ITALIC = "ITALIC"
-    CODE = "CODE"
-    LINK = "LINK"
-    IMAGE = "IMAGE"
+    TEXT = "text"
+    BOLD = "bold"
+    ITALIC = "italic"
+    CODE = "code"
+    LINK = "link"
+    IMAGE = "image"
 
 class TextNode():
     def __init__(self,text, text_type, url=None):
@@ -15,9 +15,6 @@ class TextNode():
         self.url = url
     
     def __eq__(self, other):
-        if not isinstance(other, self.__class__):
-            return False
-        
         return (self.text == other.text and
                 self.text_type == other.text_type and
                 self.url == other.url)
