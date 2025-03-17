@@ -81,5 +81,9 @@ class TestHTMLNode(unittest.TestCase):
         node = LeafNode(None, "Hello, world!")
         self.assertEqual(node.to_html(), "Hello, world!")
 
+    def test_leaf_repr(self):
+        node = LeafNode("a", "google.com", {"href":"https://www.google.com", "target":"_blank"})
+        self.assertEqual(repr(node), "LeafNode('a','google.com',{'href': 'https://www.google.com', 'target': '_blank'})")
+
 if __name__ == "__main__":
     unittest.main()
