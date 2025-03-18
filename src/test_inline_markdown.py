@@ -123,7 +123,7 @@ class TestSplitNodes(unittest.TestCase):
         )
 
     def test_extract_links_image_text_2(self):
-        text = "This is text with a link [to boot dev](https://www.boot.dev) and ![image](https://i.imgur.com/zjjcJKZ.png)"
+        text = "[to boot dev](https://www.boot.dev) and ![image](https://i.imgur.com/zjjcJKZ.png)"
         matches = extract_markdown_links(text)
         self.assertListEqual(
             [("to boot dev","https://www.boot.dev")],
