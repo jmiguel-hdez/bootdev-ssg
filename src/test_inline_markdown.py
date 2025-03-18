@@ -130,5 +130,20 @@ class TestSplitNodes(unittest.TestCase):
             matches
         )
 
+    def test_extract_links_image_text_3(self):
+        text = "[outer [inner] text](https://www.boot.dev) and ![image](https://i.imgur.com/zjjcJKZ.png)"
+        matches = extract_markdown_links(text)
+        self.assertListEqual(
+            [],
+            matches
+        )
+
+    def test_extract_links_image_text_4(self):
+        text = "[bootdev](https://www.boot.dev(parentheses)) and ![image](https://i.imgur.com/zjjcJKZ.png)"
+        matches = extract_markdown_links(text)
+        self.assertListEqual(
+            [],
+            matches
+        )
 if __name__ == "__main__":
     unittest.main()
