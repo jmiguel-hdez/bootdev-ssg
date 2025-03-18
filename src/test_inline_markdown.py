@@ -78,3 +78,6 @@ class TestSplitNodes(unittest.TestCase):
                 TextNode("italic", TextType.ITALIC),
             ]
         )
+
+if __name__ == "__main__":
+    unittest.main()
