@@ -113,6 +113,22 @@ class TestSplitNodes(unittest.TestCase):
             [],
             matches
         )
+    
+    def test_extract_links_image_text(self):
+        text = "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+        matches = extract_markdown_links(text)
+        self.assertListEqual(
+            [],
+            matches
+        )
+
+    def test_extract_links_image_text_2(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and ![image](https://i.imgur.com/zjjcJKZ.png)"
+        matches = extract_markdown_links(text)
+        self.assertListEqual(
+            [("to boot dev","https://www.boot.dev")],
+            matches
+        )
 
 if __name__ == "__main__":
     unittest.main()

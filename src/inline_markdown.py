@@ -29,6 +29,6 @@ def extract_markdown_images(text: str) -> List[Tuple[str, str]]:
     return matches
 
 def extract_markdown_links(text: str) -> List[Tuple[str, str]]:
-    pattern = r"\[(.*?)\]\((.*?)\)"
+    pattern = r"[^!]\[(.*?)\]\((.*?)\)"
     matches = re.findall(pattern, text)
     return matches
