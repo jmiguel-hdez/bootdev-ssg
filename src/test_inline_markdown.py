@@ -265,5 +265,25 @@ class TestSplitNodes(unittest.TestCase):
             ]
         )
 
+
+    def test_text_to_textnodes_3(self):
+        text = "This is text with a word"
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            nodes,
+            [
+                TextNode("This is text with a word", TextType.TEXT),
+            ]
+        )
+
+    def test_text_to_textnodes_empty(self):
+        text = ""
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            nodes,
+            [
+            ]
+        )
+
 if __name__ == "__main__":
     unittest.main()
