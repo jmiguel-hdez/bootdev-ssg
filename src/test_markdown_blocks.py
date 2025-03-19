@@ -1,4 +1,4 @@
-from block_markdown import (
+from markdown_blocks import (
     markdown_to_blocks,
     block_to_block_type,
     BlockType
@@ -86,10 +86,10 @@ This is a paragraph of text. It has some **bold** and _italic_ words inside of i
                 BlockType.HEADING,
                 BlockType.CODE,
                 BlockType.QUOTE,
-                BlockType.UNORDERED_LIST,
-                BlockType.ORDERED_LIST,
+                BlockType.ULIST,
+                BlockType.OLIST,
                 BlockType.PARAGRAPH,
-                BlockType.UNORDERED_LIST,
+                BlockType.ULIST,
             ],
         )
 

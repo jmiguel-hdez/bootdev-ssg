@@ -6,8 +6,8 @@ class BlockType(Enum):
     HEADING = "heading"
     CODE = "code"
     QUOTE = "quote"
-    UNORDERED_LIST = "unordered_list"
-    ORDERED_LIST = "ordered_list"
+    ULIST = "unordered_list"
+    OLIST = "ordered_list"
 
 
 def markdown_to_blocks(markdown):
@@ -64,9 +64,9 @@ def block_to_block_type(block):
         return BlockType.QUOTE
 
     if (is_block_an_unordered_list(block)):
-        return BlockType.UNORDERED_LIST
+        return BlockType.ULIST
     
     if (is_block_an_ordered_list(block)):
-        return BlockType.ORDERED_LIST
+        return BlockType.OLIST
 
     return BlockType.PARAGRAPH
