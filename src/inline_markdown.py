@@ -35,3 +35,47 @@ def extract_markdown_links(text: str) -> List[Tuple[str, str]]:
     pattern = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
     matches = re.findall(pattern, text)
     return matches
+
+def split_nodes_image(old_nodes):
+    new_nodes = []
+    pattern = r"(!\[[^\[\]]*\]\([^\(\)]*\))"
+    for old_node in old_nodes:
+        if old_node.text_type != TextType.TEXT:
+            new_nodes.append(old_node)
+            continue
+        split_nodes = []
+        sections = re.split(pattern, old_node.text)
+        if len(sections) % 2 == 0:
+            raise ValueError("invalid markdown syntax")
+        for i,s in enumerate(sections):
+            if s == "":
+                continue
+            if i % 2 == 0:
+                split_nodes.append(TextNode(s, TextType.TEXT))
+            else:
+                images = extract_markdown_images(s)
+                split_nodes.append(TextNode(images[0][0], TextType.IMAGE, images[0][1]))
+        new_nodes.extend(split_nodes)
+    return new_nodes
+
+def split_nodes_link(old_nodes):
+    new_nodes = []
+    pattern = r"(?<!!)(\[[^\[\]]*\]\([^\(\)]*\))"
+    for old_node in old_nodes:
+        if old_node.text_type != TextType.TEXT:
+            new_nodes.append(old_node)
+            continue
+        split_nodes = []
+        sections = re.split(pattern, old_node.text)
+        if len(sections) % 2 == 0:
+            raise ValueError("invalid markdown syntax")
+        for i,s in enumerate(sections):
+            if s == "":
+                continue
+            if i % 2 == 0:
+                split_nodes.append(TextNode(s, TextType.TEXT))
+            else:
+                links = extract_markdown_links(s)
+                split_nodes.append(TextNode(links[0][0], TextType.LINK, links[0][1]))
+        new_nodes.extend(split_nodes)
+    return new_nodes
