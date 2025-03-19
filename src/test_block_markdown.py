@@ -1,4 +1,8 @@
-from block_markdown import markdown_to_blocks
+from block_markdown import (
+    markdown_to_blocks,
+    block_to_block_type,
+    BlockType
+)
 import unittest
 from pprint import pprint
 
@@ -41,6 +45,51 @@ This is a paragraph of text. It has some **bold** and _italic_ words inside of i
                 "# This is a heading",
                 "This is a paragraph of text. It has some **bold** and _italic_ words inside of it.",
                 "- This is the first list item in a list block\n- This is a list item\n- This is another list item"
+            ],
+        )
+
+
+    def test_block_to_block_type(self):
+        md = """
+## This is a heading
+
+```python
+print("hello, world!")
+```
+
+> this is
+> a quote
+>block
+
+- this is an item
+- this is another item
+- this is a third item
+
+1. this is an item
+2. this is another item
+3. this is a third item
+
+
+
+
+This is a paragraph of text. It has some **bold** and _italic_ words inside of it.
+
+- This is the first list item in a list block
+- This is a list item
+- This is another list item
+"""
+        blocks = markdown_to_blocks(md)
+        types = [block_to_block_type(b) for b in blocks]
+        self.assertEqual(
+            types,
+            [
+                BlockType.HEADING,
+                BlockType.CODE,
+                BlockType.QUOTE,
+                BlockType.UNORDERED_LIST,
+                BlockType.ORDERED_LIST,
+                BlockType.PARAGRAPH,
+                BlockType.UNORDERED_LIST,
             ],
         )
 
