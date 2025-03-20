@@ -71,12 +71,13 @@ def text_olist_to_html_node(text):
     return ParentNode(tag,list_items)
 
 def text_code_to_html_node(text):
-    lines = [l for l in text.split("\n") if not l.startswith("```")]
-    lines.append("")
-    remaining_text = "\n".join(lines)
-    children = text_node_to_html_node(TextNode(remaining_text,TextType.CODE))
-
-    return ParentNode("pre",[children])
+    remaining_text = text[4:-3]
+    #lines = [l for l in text.split("\n") if not l.startswith("```")]
+    #lines.append("")
+    #remaining_text = "\n".join(lines)
+    child = text_node_to_html_node(TextNode(remaining_text,TextType.TEXT))
+    code = ParentNode("code", [child])
+    return ParentNode("pre",[code])
 
 def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
