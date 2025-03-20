@@ -109,7 +109,7 @@ def extract_title(markdown):
     
     raise ValueError("Malformed Mardown, it doesn't have a title")
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath="/"):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     page = ""
     with open(from_path) as from_md:
@@ -121,6 +121,8 @@ def generate_page(from_path, template_path, dest_path):
             page = template.read()
             page = page.replace("{{ Title }}", title)
             page = page.replace("{{ Content }}", html)
+            page = page.replace('href="/',f'href="{basepath}')
+            page = page.replace('src="/',f'href="{basepath}')
     
     dest_directory = os.path.dirname(dest_path)
     if not os.path.exists(dest_directory):
@@ -129,7 +131,7 @@ def generate_page(from_path, template_path, dest_path):
     with open(dest_path, "w") as out:
         out.write(page)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath="/"):
     if not os.path.exists(dir_path_content):
         raise ValueError(f"{dir_path_content} doesn't exist")
 
@@ -141,6 +143,6 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
         dst_path = Path(dest_dir_path) / Path(f)
         if os.path.isfile(from_path):
             dst_path = os.path.splitext(dst_path)[0] + ".html"
-            generate_page(from_path, template_path, dst_path)
+            generate_page(from_path, template_path, dst_path, basepath)
         else:
             generate_pages_recursive(from_path, template_path, dst_path)
