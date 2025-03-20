@@ -1,4 +1,5 @@
 import os, shutil
+from pathlib import Path
 from typing import List,Tuple
 from htmlnode import HTMLNode, LeafNode, ParentNode
 from textnode import TextNode, TextType, text_node_to_html_node
@@ -127,3 +128,19 @@ def generate_page(from_path, template_path, dest_path):
 
     with open(dest_path, "w") as out:
         out.write(page)
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    if not os.path.exists(dir_path_content):
+        raise ValueError(f"{dir_path_content} doesn't exist")
+
+    if not os.path.exists(dest_dir_path):
+        os.mkdir(dest_dir_path)
+    
+    for f in os.listdir(dir_path_content):
+        from_path = Path(dir_path_content) / Path(f)
+        dst_path = Path(dest_dir_path) / Path(f)
+        if os.path.isfile(from_path):
+            dst_path = os.path.splitext(dst_path)[0] + ".html"
+            generate_page(from_path, template_path, dst_path)
+        else:
+            generate_pages_recursive(from_path, template_path, dst_path)
