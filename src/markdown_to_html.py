@@ -42,8 +42,10 @@ def text_paragraph_to_html_node(text):
 def text_quote_to_html_node(text):
     lines = []
     for l in text.split("\n"):
-        lines.append(l.split(">", 1)[1])
-    remaining_text = "\n".join(lines)
+        if not l.startswith(">"):
+            raise ValueError("invalid quote block")
+        lines.append(l.lstrip(">").strip())
+    remaining_text = " ".join(lines)
     children = text_to_children(remaining_text)
     tag = "blockquote"
     return ParentNode(tag,children)
@@ -61,7 +63,7 @@ def text_ulist_to_html_node(text):
 def text_olist_to_html_node(text):
     list_items = []
     for i,l in enumerate(text.split("\n")):
-        remaining_text = l.split(f"{i}. ", 1)[1]
+        remaining_text = l.split(f"{i+1}. ")[1]
         children = text_to_children(remaining_text)
         tag = "li"
         list_items.append(ParentNode(tag,children))
