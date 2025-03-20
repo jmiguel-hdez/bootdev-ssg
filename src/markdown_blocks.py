@@ -28,7 +28,7 @@ def is_block_a_heading(block):
 
 def is_block_a_codeblock(block):
     lines = block.splitlines()
-    if lines[0].startswith("```") and lines[-1].startswith("```"):
+    if len(lines) > 1 and lines[0].startswith("```") and lines[-1].startswith("```"):
         return True
     return False
 
