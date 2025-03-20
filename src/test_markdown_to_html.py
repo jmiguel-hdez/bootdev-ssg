@@ -1,5 +1,5 @@
 import unittest
-from markdown_to_html import markdown_to_html_node
+from markdown_to_html import *
 from pprint import pprint
 
 class TestMarkdownToHtml(unittest.TestCase):
@@ -148,6 +148,20 @@ this is paragraph text
         self.assertEqual(
             html,
             "<div><blockquote>This is a blockquote block</blockquote><p>this is paragraph text</p></div>",
+        )
+
+    def test_extract_title(self):
+        md = """
+some text
+
+# Heading 1
+
+
+"""
+        title = extract_title(md)
+        self.assertEqual(
+            title,
+            "Heading 1"
         )
 
 

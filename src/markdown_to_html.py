@@ -1,3 +1,4 @@
+import os, shutil
 from typing import List,Tuple
 from htmlnode import HTMLNode, LeafNode, ParentNode
 from textnode import TextNode, TextType, text_node_to_html_node
@@ -99,3 +100,30 @@ def markdown_to_html_node(markdown):
                  html_blocks.append(text_ulist_to_html_node(block))
     
     return ParentNode("div",html_blocks)
+
+def extract_title(markdown):
+    for line in markdown.split("\n"):
+        if line.startswith("# "):
+            return line[2:].strip()
+    
+    raise ValueError("Malformed Mardown, it doesn't have a title")
+
+def generate_page(from_path, template_path, dest_path):
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+    page = ""
+    with open(from_path) as from_md:
+        with open(template_path) as template:
+            md = from_md.read()
+            html = markdown_to_html_node(md).to_html()
+            title = extract_title(md)
+
+            page = template.read()
+            page = page.replace("{{ Title }}", title)
+            page = page.replace("{{ Content }}", html)
+    
+    dest_directory = os.path.dirname(dest_path)
+    if not os.path.exists(dest_directory):
+        os.makedirs(dest_directory)
+
+    with open(dest_path, "w") as out:
+        out.write(page)
