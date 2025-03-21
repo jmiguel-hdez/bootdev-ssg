@@ -145,4 +145,4 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, bas
             dst_path = os.path.splitext(dst_path)[0] + ".html"
             generate_page(from_path, template_path, dst_path, basepath)
         else:
-            generate_pages_recursive(from_path, template_path, dst_path)
+            generate_pages_recursive(from_path, template_path, dst_path, basepath)
