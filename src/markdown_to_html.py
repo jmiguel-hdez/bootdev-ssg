@@ -122,7 +122,7 @@ def generate_page(from_path, template_path, dest_path, basepath="/"):
             page = page.replace("{{ Title }}", title)
             page = page.replace("{{ Content }}", html)
             page = page.replace('href="/',f'href="{basepath}')
-            page = page.replace('src="/',f'href="{basepath}')
+            page = page.replace('src="/',f'src="{basepath}')
     
     dest_directory = os.path.dirname(dest_path)
     if not os.path.exists(dest_directory):
